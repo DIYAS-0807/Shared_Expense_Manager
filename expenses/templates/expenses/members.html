@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Members — Expense Manager</title>
+  <!-- Bootstrap CSS (from CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Your custom CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+<body>
+<div class="container py-4">
+  <h2>Members</h2>
+
+  <form method="POST" class="row g-2 mb-4">
+    {% csrf_token %}
+    <div class="col-md-5">
+      <input type="text" name="name" class="form-control" placeholder="Member name" required>
+    </div>
+    <div class="col-md-5">
+      <input type="text" name="contact" class="form-control" placeholder="Contact (email/phone)">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary w-100">Add Member</button>
+    </div>
+  </form>
+
+  <h5>Registered members</h5>
+  <table class="table table-striped">
+    <thead><tr><th>Name</th><th>Contact</th></tr></thead>
+    <tbody>
+      {% for m in members %}
+        <tr><td>{{ m.name }}</td><td>{{ m.contact }}</td></tr>
+      {% empty %}
+        <tr><td colspan="2" class="text-muted">No members yet</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h5 class="mt-4">Names seen in expenses (not in members)</h5>
+  <ul>
+    {% for n in others %}
+      <li>{{ n }}</li>
+    {% empty %}
+      <li class="text-muted">None</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back</a>
+</div>
+</body>
+</html>

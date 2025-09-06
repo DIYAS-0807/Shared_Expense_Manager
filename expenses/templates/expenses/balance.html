@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Balance & Dues — Expense Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="container py-4">
+  <h2>Balance & Dues</h2>
+  <p>Total expenses: <strong>₹{{ total_expense|floatformat:2 }}</strong></p>
+  <p>Equal share per person: <strong>₹{{ per_person_share|floatformat:2 }}</strong></p>
+
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Total Paid</th>
+        <th>Share</th>
+        <th>Balance / Dues</th>
+        <th>Last Payment Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.name }}</td>
+        <td>₹{{ r.paid|floatformat:2 }}</td>
+        <td>₹{{ r.share|floatformat:2 }}</td>
+        <td>
+          {% if r.balance >= 0 %}
+            <span class="text-success">+₹{{ r.balance|floatformat:2 }}</span>
+          {% else %}
+            <span class="text-danger">-₹{{ r.balance_abs|floatformat:2 }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if r.last_date %}
+            {{ r.last_date|date:"d M, Y H:i" }}
+          {% else %}
+            N/A
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+</div>
+</body>
+</html>

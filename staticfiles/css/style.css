@@ -1,0 +1,17 @@
+body {
+  background-color: #f8f9fa; /* light gray background */
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+h2 {
+  color: #343a40;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn {
+  border-radius: 8px;
+}
