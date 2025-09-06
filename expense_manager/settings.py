@@ -8,10 +8,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-your-secret-key'   # replace with your own if needed
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True   # Keep True while developing
+DEBUG = False   # Set False for production on Render
 
-ALLOWED_HOSTS = []   # Empty list is fine when DEBUG = True
+# Add your Render domain here
+ALLOWED_HOSTS = ['shared-expense-manager-4.onrender.com']
 
+# Allow CSRF for Render domain
+CSRF_TRUSTED_ORIGINS = ['https://shared-expense-manager-4.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -39,7 +42,7 @@ ROOT_URLCONF = 'expense_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],   # You can add template dirs here if needed
+        'DIRS': [],   # Add template dirs here if needed
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -54,9 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'expense_manager.wsgi.application'
 
-
-# Database
-# (default: SQLite, which is fine for your project)
+# Database (SQLite)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -64,23 +65,13 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
-
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -88,14 +79,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# ✅ Static files (CSS, JavaScript, Images)
+# Static files (CSS, JS, images)
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),   # look for /static folder at project root
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # local static folder
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # collected static for Render
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
